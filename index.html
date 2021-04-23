@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello Bulma!</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <div class="columns is-flex-direction-row is-align-items-stretch is-gapless my-0">
+    <div class="column has-background-link-dark ">
+      <div class="container my-6 mr-6">
+        <section class="section">
+
+        </section>
+        <section class="section">
+
+        </section>
+        <section class="section">
+
+        </section>
+        <section class="section">
+          <h3 class="is-size-1 has-text-right has-text-white has-text-weight-bold ">
+            Nownotes
+          </h3>
+          <h2 class="is-size-5 has-text-right has-text-white">
+            Nownotes is a beautiful,<br> flexible writing app for crafting notes and prose.
+          </h2>
+        </section>
+        <section class="section">
+
+        </section>
+        <section class="section">
+
+        </section>
+        <section class="section">
+
+        </section>
+      </div>
+    </div>
+    <div class="column has-background-info-light">
+      <div class="container ">
+        <section class="section">
+
+        </section>
+
+        <section class="section ">
+
+        </section>
+        
+        <section class="section mx-6" id="loginform">
+
+         <img src="./images/writing.png" alt="notes_img" class="image is-128x128 pb-4" >
+
+          <h3 class="is-size-4 has-text-left has-text-weight-bold mb-4">Login</h3>
+          <form action="newlogin.php" method="POST" id="loginform" >
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" id="user" name="user" type="text" placeholder="Email"
+                  onfocus="resetLoginErrors();">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-check"></i>
+                </span>
+                <span class="has-text-danger" id="usernameerror"></span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" id="password" name="password" type="password" placeholder="Password"
+                  onfocus="resetLoginErrors();">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+                <span class="has-text-danger" id="passworderror"></span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button type="button" onclick="checkUserCred();" class="button is-success">
+                  Login
+                </button>
+              </p>
+              <h4 class="mt-2">Don't have an account? <a onclick="ShowRegister();">Register here.</a></h4>
+            </div>
+          </form>
+        </section>
+        <section class="section mx-6" id="registerform" style="display: none;">
+          <img src="./images/writing.png" alt="notes_img" class="image is-128x128 pb-4">
+          <h3 class="is-size-4 has-text-left has-text-weight-bold mb-4">Register</h3>
+          <form action="newregistration.php" method="POST">
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" id="userRegName" name="userRegName" type="email" placeholder="Email" onfocus="resetLoginErrorsReg();">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-check"></i>
+                </span>
+                <span class="has-text-danger" id="regnameerror"></span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" id="userRegPass" name="userRegPass" type="password" placeholder="Password" onfocus="resetLoginErrorsReg();">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+                <span class="has-text-danger" id="regpasserror"></span>
+              </p>
+            </div>
+            <!-- <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" id="conregpass" type="password" placeholder="Confirm Password" onfocus="resetLoginErrors();">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+                <span class="has-text-danger" id="conpasserror"></span>
+              </p>
+            </div> -->
+            <div class="field">
+              <p class="control">
+                <button type="button" class="button is-success" onclick=" checkUserCredReg();" >
+                  Register
+                </button>
+              </p>
+              <h4 class="mt-2">Already have an account? <a onclick="Showlogin();">Login here.</a></h4>
+            </div>
+          </form>
+
+        </section>
+        <section class="section">
+
+        </section>
+        <section class="section">
+
+        </section>
+        <section class="section">
+
+        </section>
+      </div>
+    </div>
+  </div>
+  <div class="columns mb-0">
+    <div class="column has-background-primary-dark has-text-white has-text-centered is-size-4">
+      <h5>© 2018 fuze.</h5>
+    </div>
+  </div>
+  <script>
+    function ShowRegister() {
+      var loginform = document.getElementById("loginform");
+      var registerform = document.getElementById("registerform");
+      loginform.style.display = "none";
+      registerform.style.display = "block";
+    }
+    function Showlogin() {
+      var loginform = document.getElementById("loginform");
+      var registerform = document.getElementById("registerform");
+      loginform.style.display = "block";
+      registerform.style.display = "none";
+    }
+
+    function validateEmail(emailString) {
+      var patternEmail = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$";
+      if (emailString.match(patternEmail)) {
+        return true;
+      } else {
+        return false;
+      }
+
+    }
+
+    function validatePass(passString) {
+      var patternPass = ".{8,}";
+      if (passString.match(patternPass)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+  /*   function confirmPass() {
+        var password = document.getElementById("txtPassword").value;
+        var confirmPassword = document.getElementById("txtConfirmPassword").value;
+        if (password != confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+        return true;
+    } */
+
+    function validateLogin() {
+      console.log("Validating Login")
+
+      var usererrorTxt = document.getElementById("usernameerror").innerHTML;
+      var passerrorTxt = document.getElementById("passworderror").innerHTML;
+
+      var userName = document.getElementById("user").value;
+      var passWord = document.getElementById("password").value;
+
+      let validationStatus = true;
+
+
+      if (!validateEmail(userName)) {
+        document.getElementById("usernameerror").innerHTML = "Invalid Email"
+        validationStatus = false;
+      }
+
+      if (!validatePass(passWord)) {
+        document.getElementById("passworderror").innerHTML = "Invalid Password"
+        validationStatus = false;
+      }
+
+
+
+      return validationStatus;
+
+    }
+
+    function validateRegister() {
+
+      var registeruserName = document.getElementById("userRegName").value;
+      var registerpassWord = document.getElementById("userRegPass").value;
+      //var confirmpassWord = document.getElementById("conregpass").value;
+
+      let validationStatus1 = true;
+
+
+      if (!validateEmail(registeruserName)) {
+        document.getElementById("regnameerror").innerHTML = "Invalid Email"
+        validationStatus1 = false;
+      }
+
+      if (!validatePass(registerpassWord)) {
+        document.getElementById("regpasserror").innerHTML = "Invalid Password"
+        validationStatus1 = false;
+      }
+
+      return validationStatus1;
+
+
+    }
+
+    function resetLoginErrors() {
+      document.getElementById("usernameerror").innerHTML = "";
+      document.getElementById("passworderror").innerHTML = "";
+    }
+
+    function resetLoginErrorsReg() {
+      document.getElementById("regnameerror").innerHTML = "";
+      document.getElementById("regpasserror").innerHTML = "";
+    }
+
+    function checkUserCred() {
+       if(!validateLogin()){
+        return;
+       }
+       
+      // using XMLHttpRequest
+      /*       var xhr = new XMLHttpRequest();
+           xhr.open("GET", "http://localhost/nownotes/newlogin.php", true);
+           xhr.withCredentials = true;
+           xhr.setRequestHeader("Authorization",'Basic '+ btoa('fuze@gmail.com:qwertyuiop'));
+           xhr.onload = function () {
+             console.log(xhr.responseText);
+           };
+           xhr.send(); */
+      var userName = document.getElementById("user").value;
+      var passWord = document.getElementById("password").value;
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost/nownotes/newlogin.php',
+        data: { user: userName, password: passWord },
+        success: function (response) {
+          console.log(response)
+          $( "#loginform" ).submit();
+        },
+        error: function (error) {
+          console.log(error)
+          document.getElementById("passworderror").innerHTML = "User not found"
+        }
+      });
+    }
+
+    function checkUserCredReg() {
+       if(!validateRegister()){
+        return;
+       }
+       
+      // using XMLHttpRequest
+      /*       var xhr = new XMLHttpRequest();
+           xhr.open("GET", "http://localhost/nownotes/newlogin.php", true);
+           xhr.withCredentials = true;
+           xhr.setRequestHeader("Authorization",'Basic '+ btoa('fuze@gmail.com:qwertyuiop'));
+           xhr.onload = function () {
+             console.log(xhr.responseText);
+           };
+           xhr.send(); */
+      var userRegName = document.getElementById("userRegName").value;
+      var userRegPass = document.getElementById("userRegPass").value;
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost/nownotes/newregistration.php',
+        data: { userRegName: userRegName, userRegPass: userRegPass },
+        success: function (response) {
+          console.log(response)
+          $( "#registerform" ).submit();
+        },
+        error: function (error) {
+          console.log(error)
+          document.getElementById("regpasserror").innerHTML = "User not found"
+        }
+      });
+
+
+
+    }
+  </script>
+</body>
+
+</html>
